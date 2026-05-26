@@ -1,0 +1,25 @@
+🟢 Easy: The Blueprint Setup
+
+- Create an `abstract class Shape` with an abstract method `double calculateArea()` and 
+a concrete method `void displayDescription()`.
+- Implement two subclasses: `Circle` (attribute: `radius`) and `Rectangle` 
+(attributes: `length`, `width`).
+- In a `Main` class, instantiate them and print their areas.
+
+🟡 Medium: Polymorphic Array & Interface Integration
+
+- Introduce a `Resizeable` interface with a method `void resize(double percentage)`. 
+Make only the `Rectangle` implement it.
+- In your `Main` class, create an array or `ArrayList` of type `Shape[]` 
+containing a mix of circles and rectangles.
+- Iterate through the array polymorphically to calculate the total combined area of all shapes.
+- **The Downcasting Challenge:** Inside the loop, use the `instanceof` operator to detect if a shape is a `Rectangle`.
+ If it is, downcast it and call the `resize()` method to double its size.
+
+🔴 Hard: The Abstract Factory & Custom Exception
+
+- Add a `Triangle` shape. Implement checks inside the constructors: if a user inputs negative 
+dimensions or impossible side lengths for a triangle, throw a custom exception called `InvalidShapeException`.
+- Create a `ShapeManager` class that can group shapes by their types using basic logic. Implement a method 
+that calculates the perimeter of all shapes, but since some shapes might not support perimeters yet, manage this 
+gracefully without crashing the system.
