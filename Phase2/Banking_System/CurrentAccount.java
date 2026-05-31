@@ -1,19 +1,23 @@
-package Phase2.Banking_System;
-
 public class CurrentAccount extends BankAccount {
 
-    int interestRate;
+    double overdraftLimit;
 
     public CurrentAccount(int accountNumber,String accountHolderName,double balance)
     {
         super(accountNumber,accountHolderName,balance);
     }
 
-    public void applyInterest()
+    public void withdraw(double amount) throws InvalidWithdrawBalance
     {
-        System.out.println("Interest applied to Current Account");
+       double balance = getBalance();
+       if(amount > balance + overdraftLimit)
+       {
+            throw new InvalidWithdrawBalance("Insufficiant Balance ");
+       }
+       else
+       {
+            balance -= amount;
+       }
     }
-
-    
     
 }

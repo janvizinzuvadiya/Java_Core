@@ -23,3 +23,78 @@ dimensions or impossible side lengths for a triangle, throw a custom exception c
 - Create a `ShapeManager` class that can group shapes by their types using basic logic. Implement a method 
 that calculates the perimeter of all shapes, but since some shapes might not support perimeters yet, manage this 
 gracefully without crashing the system.
+
+
+## 2. Banking System (Encapsulation, Chaining, & Account Types)
+
+*This topic forces you to write safe, encapsulated code with clean constructor chaining.*
+
+### 🟢 Easy: Clean Encapsulated Account
+
+- Create a `BankAccount` class with `private` fields: `accountNumber`, `accountHolderName`, 
+and `balance`.
+- Provide a constructor that initializes all variables using the `this` keyword. Provide 
+public getters, but **no setters** for `accountNumber` and `balance` (to prevent unauthorized
+ modification).
+- Create safe `deposit(double amount)` and `withdraw(double amount)` methods with basic 
+validations (e.g., amount must be positive).
+
+### 🟡 Medium: Inheritance & Constructor Chaining
+
+- Create two subclasses of `BankAccount`: `SavingsAccount` and `CurrentAccount`.
+- `SavingsAccount` should have an instance variable `interestRate` and a method `applyInterest()`.
+- `CurrentAccount` should have an `overdraftLimit` variable. Modify its `withdraw()` method to 
+allow the balance to go negative, up to the overdraft limit.
+- **Chaining Requirement:** Use `super()` correctly in the subclass constructors to chain up
+ to the parent `BankAccount` constructor.
+
+### 🔴 Hard: Transaction Logs & The `this` Hand-off
+
+- Create a `TransactionEngine` class with a method `void logTransaction(BankAccount account,
+ String type, double amount)`.
+- Inside the `BankAccount` class's `deposit()` and `withdraw()` methods, call the transaction 
+engine and pass the current account instance using the **`this` keyword as an argument** 
+(e.g., `engine.logTransaction(this, "Deposit", amount)`).
+- Override `toString()`, `equals()`, and `hashCode()` for `BankAccount` so two accounts are 
+considered identical if they share the exact same `accountNumber`.
+
+## 3. Library Management CLI Project (Relationships & Associations)
+
+*This is an excellent real-world project tracking "Has-A" relationships (Aggregation and 
+Composition).*
+
+### 🟢 Easy: Entity Layout
+
+- Create a `Book` class (attributes: `isbn`, `title`, `author`, `isAvailable`) and a `User`
+ class (attributes: `userId`, `name`).
+- Implement fundamental methods to display book details. Ensure encapsulation is strictly
+ followed.
+
+### 🟡 Medium: The Borrowing Mechanism
+
+- Create a `Library` class that contains an `ArrayList<Book>` and an `ArrayList<User>`.
+- Implement a method `void lendBook(String isbn, int userId)`. This method must look up
+ the book, check if `isAvailable` is true, map it to the user, and set `isAvailable` to false.
+- Implement a matching `returnBook(String isbn)` method.
+
+### 🔴 Hard: Advanced Book Categorization & State Management
+
+- Convert the book categories (e.g., `FICTION`, `SCIENCE`, `HISTORY`) into an **`enum`**.
+- Implement a maximum borrowing limit for users (e.g., a single user cannot borrow more than 3
+ books simultaneously).
+- **The Ultimate Challenge:** Add a feature that tracks fine calculations for late returns. 
+If a book is returned past its due window, calculate a fee and prevent that `User` instance 
+from borrowing any more books until their outstanding balance is cleared via a public `payFine()` 
+interface method.
+
+## 4. Refactoring Challenge (Procedural to OOP Conversion)
+
+Before diving into code from scratch, take one of your older applications from Phase 1 
+(like your Mini Quiz App or Command-Line Calculator) and refactor it completely using your
+new OOP toolkit:
+
+1. **Eliminate Naked Values:** If you used raw arrays of Strings for your Quiz app questions
+ and options, convert them into an array of concrete `Question` objects.
+2. **Unpack the Main Method:** If your old Calculator had a massive `main` method full
+ of `switch-case` blocks, strip the logic out. Create a `Calculator` class, utilize `static` 
+ utility methods for operations, or create abstract operation handlers to clean up the execution flow.

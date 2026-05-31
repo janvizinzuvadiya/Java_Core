@@ -1,15 +1,15 @@
-package Phase2.Banking_System;
-
 public class BankAccount  {
 
     private int accountNumber;
     private String accountHolderName;
     private double balance;
+    private TransactionEngine engine;
 
-    public BankAccount(int accountNumber,String accountHolderName,double balance) {
+    public BankAccount(int accountNumber,String accountHolderName,double balance,TransactionEngine engine) {
         this.accountNumber = accountNumber;
         this.accountHolderName = accountHolderName;
         this.balance = balance;
+        this.engine = engine;
     }
 
     public int getAccountNumber() {
@@ -28,19 +28,18 @@ public class BankAccount  {
         this.accountHolderName = accountHolderName;
     }
 
-    
-
     public void deposit(double amount) 
     {
         if(amount >= 0)
         {
             this.balance += amount;
-            System.out.println("New Balance : " + balance);
         }
         else
         {
             System.out.println("Invalid amount");
         }
+
+        engine.logTransaction(this, "Deposite", amount);
     }
 
     public void withdraw(double amount) throws InvalidWithdrawBalance{
@@ -56,9 +55,45 @@ public class BankAccount  {
         else
         {
             this.balance -= amount;
-            System.out.println("Withdrawal successful");
-            System.out.println("New Balance : " + balance);
         }
+        engine.logTransaction(this, "Withdrawal", amount);
+    }
+
+
+
+    @Override
+    public String toString()
+    {
+        String data = 
+        "Account Number :" + accountNumber + "\n" + 
+        "Account Holder Name :" + accountHolderName + "\n" + 
+        "Balance :" + balance;
+
+        return data;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(this == o)
+        {
+            return true;
+        }
+        if(o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        BankAccount that = (BankAccount) o;
+        return accountNumber == that.accountNumber &&
+                Double.compare(that.balance, balance) == 0 &&
+                Objects.equals(accountHolderName, that.accountHolderName) &&
+                Objects.equals(engine, that.engine);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(accountNumber, accountHolderName, balance, engine);
     }
 
 }
