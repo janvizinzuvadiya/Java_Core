@@ -38,7 +38,7 @@ public class Book
     return isAvailable;
    }  
 
-    public void DisplayBookDetails()
+    public void displayBookDetails()
     {
         System.out.println("------------------------------------------------");
         System.out.println("Title    : " + title);
