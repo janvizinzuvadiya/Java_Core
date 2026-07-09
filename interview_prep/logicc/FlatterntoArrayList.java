@@ -13,7 +13,8 @@ public class FlatterntoArrayList {
         a1.add(1);
         a1.add(1);
 
-        int a2[] = {1,1};
+        Integer a2[] = {1,1};
+        
         int a3 = 2;
 
         arr.add(a1);
@@ -24,7 +25,7 @@ public class FlatterntoArrayList {
         {
             if(val instanceof List)
             {
-                for(Object x : val)
+                for(Object x : (List<?>)val)
                 {
                     result.add((Integer)x);
                 }
@@ -35,11 +36,7 @@ public class FlatterntoArrayList {
             }    
         }
         
-        for (Integer i : result)
-        {
-            System.out.println(i);
-        }
-        
         System.out.println(arr);
+        System.out.println(result);
     }
 }
